@@ -1,0 +1,19 @@
+name: keep-supabase-awake
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # 매일 00:00 UTC (한국 09:00)
+  workflow_dispatch:       # Actions 화면에서 직접 실행해 시험할 수 있음
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install psycopg2-binary
+      - run: python keepalive.py
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
