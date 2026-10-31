@@ -33,7 +33,7 @@ https://team-formation-ms26.streamlit.app
 - **모델 고르는 단계의 실패:** 후보 모델을 시험하는 동안 HTTP 404(무료 제공 종료, 제공자 없음), 403(에이전트 전용), 503(제공 서버 없음), 429(사용량 초과)를 받음. 화면 `img/free-model-test.png`, `img/free-model-find.png`
 
 ## 6. 클로드가 잘못된 추론이나 답변을 한 사례와 알아챈 방법
-- **사례:** 클로드가 만든 `ai.py`의 기본 모델 목록과, 이어서 클로드가 추천한 무료 모델 후보 6개 대부분이 이미 무료로 쓸 수 없는 모델이었음. 클로드는 몇 주 전 웹 검색 결과를 근거로 골랐는데, 그 사이 무료 모델 목록이 바뀌었음. 예: `nvidia/nemotron-3-super-120b-a12b:free`는 "무료로 쓸 수 없음"(404), `poolside/laguna-s-2.1:free`는 "제공자가 없음"(404), `thinkingmachines/inkling-small:free`는 "에이전트 전용"(403).
+- **사례:** 클로드가 추천한 무료 모델 후보 6개 가운데 5개가 이미 무료로 쓸 수 없는 모델이었음. 그중 `nvidia/nemotron-3-super-120b-a12b:free`는 클로드가 만든 `ai.py`의 기본 모델이기도 했음. 클로드는 몇 주 전 웹 검색 결과를 근거로 골랐는데, 그 사이 무료 모델 목록이 바뀌었음. 예: `nvidia/nemotron-3-super-120b-a12b:free`는 "무료로 쓸 수 없음"(404), `poolside/laguna-s-2.1:free`는 "제공자가 없음"(404), `thinkingmachines/inkling-small:free`는 "에이전트 전용"(403).
 - **알아챈 방법:** 모델 이름을 앱에 넣기 전에 시험 스크립트(`test_models.py`)로 6개를 한 번씩 불러 봄. 1개만 성공하고 5개가 실패함 (화면 `img/free-model-test.png`).
 - **고친 방법:** 추측 대신 오픈라우터의 모델 목록 API에서 지금 무료인 모델을 받아 차례로 시험하는 스크립트(`find_free.py`)를 만들어, 성공한 모델 가운데 회사가 다른 3개를 고름 (화면 `img/free-model-find.png`). `ai.py`의 `DEFAULT_MODELS`를 바꿔 커밋 `887f9ed`에 반영함.
 
